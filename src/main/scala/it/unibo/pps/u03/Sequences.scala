@@ -39,7 +39,7 @@ object Sequences: // Essentially, generic linkedlists
       case Nil() => Nil()
       case Cons(h, t) if n > 0 => skip(t)(n - 1)
       case Cons(h, t) => Cons(h, t)
-    
+
     /*
      * Zip two sequences
      * E.g., [10, 20, 30], [40, 50] => [(10, 40), (20, 50)]
@@ -49,14 +49,17 @@ object Sequences: // Essentially, generic linkedlists
     def zip[A, B](first: Sequence[A], second: Sequence[B]): Sequence[(A, B)] = (first, second) match
       case (Cons(h1, t1), Cons(h2, t2)) => Cons((h1, h2), zip(t1, t2))
       case (_, _) => Nil()
-    
+
     /*
      * Concatenate two sequences
      * E.g., [10, 20, 30], [40, 50] => [10, 20, 30, 40, 50]
      * E.g., [10], [] => [10]
      * E.g., [], [] => []
      */
-    def concat[A](s1: Sequence[A], s2: Sequence[A]): Sequence[A] = ???
+    def concat[A](s1: Sequence[A], s2: Sequence[A]): Sequence[A] = (s1, s2) match
+      case (Cons(h1, t1), _) => Cons(h1, concat(t1, s2))
+      case (Nil(), Cons(h2, t2)) => Cons(h2, concat(s1, t2))
+      case (_, _) => Nil()
 
     /*
      * Reverse the sequence
@@ -64,7 +67,10 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10] => [10]
      * E.g., [] => []
      */
-    def reverse[A](s: Sequence[A]): Sequence[A] = ???
+    def reverse[A](s: Sequence[A]): Sequence[A] = s match
+      case Nil() => Nil()
+
+
 
     /*
      * Map the elements of the sequence to a new sequence and flatten the result
