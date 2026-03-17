@@ -5,7 +5,7 @@ import u03.Optionals.Optional
 import scala.annotation.tailrec
 
 object Sequences: // Essentially, generic linkedlists
-  
+
   enum Sequence[E]:
     case Cons(head: E, tail: Sequence[E])
     case Nil()
@@ -14,16 +14,16 @@ object Sequences: // Essentially, generic linkedlists
 
     def sum(l: Sequence[Int]): Int = l match
       case Cons(h, t) => h + sum(t)
-      case _          => 0
+      case _ => 0
 
     def map[A, B](l: Sequence[A])(mapper: A => B): Sequence[B] = l match
       case Cons(h, t) => Cons(mapper(h), map(t)(mapper))
-      case Nil()      => Nil()
+      case Nil() => Nil()
 
     def filter[A](l1: Sequence[A])(pred: A => Boolean): Sequence[A] = l1 match
       case Cons(h, t) if pred(h) => Cons(h, filter(t)(pred))
-      case Cons(_, t)            => filter(t)(pred)
-      case Nil()                 => Nil()
+      case Cons(_, t) => filter(t)(pred)
+      case Nil() => Nil()
 
     // Lab 03
 
@@ -83,7 +83,6 @@ object Sequences: // Essentially, generic linkedlists
       case Nil() => Nil()
 
 
-
     /*
      * Get the minimum element in the sequence
      * E.g., [30, 20, 10] => 10
@@ -128,7 +127,7 @@ object Sequences: // Essentially, generic linkedlists
     def partition[A](s: Sequence[A])(pred: A => Boolean): (Sequence[A], Sequence[A]) = ???
 
 @main def trySequences =
-  import Sequences.* 
+  import Sequences.*
   val l = Sequence.Cons(10, Sequence.Cons(20, Sequence.Cons(30, Sequence.Nil())))
   println(Sequence.sum(l)) // 30
 
