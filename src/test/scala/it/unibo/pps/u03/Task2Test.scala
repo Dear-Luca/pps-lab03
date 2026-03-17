@@ -2,7 +2,7 @@ package it.unibo.pps.u03
 
 import it.unibo.pps.u02.AlgebraicDataTypes.Person
 import it.unibo.pps.u02.AlgebraicDataTypes.Person.{Student, Teacher}
-import it.unibo.pps.u03.task2.{es1, foldLeft}
+import it.unibo.pps.u03.task2.{es1, es3, foldLeft}
 import org.junit.Test
 import org.junit.Assert.*
 import u03.Sequences.Sequence
@@ -19,3 +19,6 @@ class Task2Test:
     assertEquals(-16, foldLeft(lst)(0)(_ - _))
     assertEquals(0, foldLeft(lst)(0)(_ / _))
     assertEquals(16, foldLeft(lst)(0)(_ + _))
+
+  @Test def testEs3() =
+    assertEquals(2, es3(persons))

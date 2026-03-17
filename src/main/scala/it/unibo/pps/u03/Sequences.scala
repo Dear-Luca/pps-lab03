@@ -1,6 +1,7 @@
 package u03
 
 import u03.Optionals.Optional
+import u03.Optionals.Optional.{Empty, Just}
 
 import scala.annotation.tailrec
 
@@ -88,7 +89,8 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [30, 20, 10] => 10
      * E.g., [10, 1, 30] => 1
      */
-    def min(s: Sequence[Int]): Optional[Int] = ???
+    def min(s: Sequence[Int]): Optional[Int] =  ???
+
 
     /*
      * Get the elements at even indices
@@ -102,7 +104,11 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10, 20, 30] => true if elem is 20
      * E.g., [10, 20, 30] => false if elem is 40
      */
-    def contains[A](s: Sequence[A])(elem: A): Boolean = ???
+    @tailrec
+    def contains[A](s: Sequence[A])(elem: A): Boolean = s match
+      case Cons(h, t) if h == elem => true
+      case Cons(_, t) => contains(t)(elem)
+      case Nil() => false
 
     /*
      * Remove duplicates from the sequence

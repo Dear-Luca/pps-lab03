@@ -22,8 +22,7 @@ object task2:
   def es2(): Unit =
     val lst = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
     println(foldLeft(lst)(0)(_ - _))
-  
-  @main
-  def es3(): Unit =
-    println("ciao")
-    
+
+
+  def es3(sequence: Sequence[Person]): Int =
+    0  
