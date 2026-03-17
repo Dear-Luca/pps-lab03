@@ -101,7 +101,6 @@ object Sequences: // Essentially, generic linkedlists
       case Cons(h, t) => concat(Cons(h, Nil()), evenIndices(skip(t)(1)))
       case Nil() => Nil()
 
-
     /*
      * Check if the sequence contains the element
      * E.g., [10, 20, 30] => true if elem is 20
@@ -138,7 +137,6 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10, 20, 20, 30] => [[10], [20, 20], [30]]
      */
     def group[A](s: Sequence[A]): Sequence[Sequence[A]] = ???
-
     /*
      * Partition the sequence into two sequences based on the predicate
      * E.g., [10, 20, 30] => ([10], [20, 30]) if pred is (_ < 20)

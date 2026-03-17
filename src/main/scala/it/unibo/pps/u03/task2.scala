@@ -5,6 +5,8 @@ import it.unibo.pps.u02.AlgebraicDataTypes.Person.{Student, Teacher}
 import u03.Sequences.Sequence
 import u03.Sequences.Sequence.*
 
+import scala.annotation.tailrec
+
 
 object task2:
 
@@ -14,6 +16,7 @@ object task2:
       case _ => Nil()
     )
 
+  @tailrec
   def foldLeft[A, B](sequence: Sequence[A])(acc: B)(operator: (B, A) => B): B = sequence match
     case Cons(h, t) => foldLeft(t)(operator(acc, h))(operator)
     case Nil() => acc
@@ -25,4 +28,4 @@ object task2:
 
 
   def es3(sequence: Sequence[Person]): Int =
-    0  
+    foldLeft(distinct(es1(sequence)))(0)((acc, s) => acc + 1)
