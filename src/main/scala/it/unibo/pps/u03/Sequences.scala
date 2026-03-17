@@ -83,7 +83,6 @@ object Sequences: // Essentially, generic linkedlists
       case Cons(h, t) => concat(mapper(h), flatMap(t)(mapper))
       case Nil() => Nil()
 
-
     /*
      * Get the minimum element in the sequence
      * E.g., [30, 20, 10] => 10
@@ -98,7 +97,10 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10, 20, 30] => [10, 30]
      * E.g., [10, 20, 30, 40] => [10, 30]
      */
-    def evenIndices[A](s: Sequence[A]): Sequence[A] = ???
+    def evenIndices[A](s: Sequence[A]): Sequence[A] = s match
+      case Cons(h, t) => concat(Cons(h, Nil()), evenIndices(skip(t)(1)))
+      case Nil() => Nil()
+
 
     /*
      * Check if the sequence contains the element
