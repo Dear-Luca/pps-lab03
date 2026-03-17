@@ -90,9 +90,7 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10, 1, 30] => 1
      */
     def min(s: Sequence[Int]): Optional[Int] = s match
-      case Cons(h, t) => min(t) match
-        case Just(n) => Just(h.min(n))
-        case Empty() => Just(h)
+      case Cons(h, t) => Optional.orElse(Optional.map(min(t))(n => Just(h.min(n))), Just(h))
       case Nil() => Empty()
 
     /*
