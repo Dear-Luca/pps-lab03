@@ -89,8 +89,11 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [30, 20, 10] => 10
      * E.g., [10, 1, 30] => 1
      */
-    def min(s: Sequence[Int]): Optional[Int] =  ???
-
+    def min(s: Sequence[Int]): Optional[Int] = s match
+      case Cons(h, t) => min(t) match
+        case Just(n) => Just(h.min(n))
+        case Empty() => Just(h)
+      case Nil() => Empty()
 
     /*
      * Get the elements at even indices
@@ -120,12 +123,14 @@ object Sequences: // Essentially, generic linkedlists
         case Cons(h, t) if contains(seen)(h) => skipDuplicates(t, seen)
         case Cons(h, t) => Cons(h, skipDuplicates(t, Cons(h, seen)))
         case Nil() => Nil()
+
       skipDuplicates(s, Nil())
 
     def distinct1[A](s: Sequence[A]): Sequence[A] = s match
       case Cons(h, t) if !contains(t)(h) => Cons(h, distinct1(t))
       case Cons(_, t) => distinct1(t)
       case Nil() => Nil()
+
     /*
      * Group contiguous elements in the sequence
      * E.g., [10, 10, 20, 30] => [[10, 10], [20], [30]]
