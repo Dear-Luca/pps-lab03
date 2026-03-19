@@ -22,3 +22,4 @@ class Task2Test:
 
   @Test def testEs3() =
     assertEquals(2, es3(persons))
+    assertEquals(0, es3(Nil()))

@@ -136,13 +136,37 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10, 20, 30] => [[10], [20], [30]]
      * E.g., [10, 20, 20, 30] => [[10], [20, 20], [30]]
      */
-    def group[A](s: Sequence[A]): Sequence[Sequence[A]] = ???
+    def group[A](s: Sequence[A]): Sequence[Sequence[A]] =
+      def streak(s: Sequence[A], prev: A): Sequence[A] = s match
+        case Cons(h, t) if h == prev => Cons(h, streak(t, h))
+        case _ => Nil()
+
+      @tailrec
+      def dropStreak(s: Sequence[A], prev: A): Sequence[A] = s match
+        case Cons(h, t) if h == prev => dropStreak(t, h)
+        case _ => s
+
+      s match
+        case Cons(h, t) => Cons(streak(s, h), group(dropStreak(t, h)))
+        case Nil() => Nil()
+
     /*
      * Partition the sequence into two sequences based on the predicate
      * E.g., [10, 20, 30] => ([10], [20, 30]) if pred is (_ < 20)
      * E.g., [11, 20, 31] => ([20], [11, 31]) if pred is (_ % 2 == 0)
      */
-    def partition[A](s: Sequence[A])(pred: A => Boolean): (Sequence[A], Sequence[A]) = ???
+    def partition[A](s: Sequence[A])(pred: A => Boolean): (Sequence[A], Sequence[A]) =
+      def trueValues(s: Sequence[A]): Sequence[A] = s match
+        case Cons(h, t) if pred(h) => Cons(h, trueValues(t))
+        case Cons(h, t) => trueValues(t)
+        case _ => Nil()
+
+      def falseValues(s: Sequence[A]): Sequence[A] = s match
+        case Cons(h, t) if !pred(h) => Cons(h, falseValues(t))
+        case Cons(h, t) => falseValues(t)
+        case _ => Nil()
+
+      (trueValues(s), falseValues(s))
 
 @main def trySequences =
   import Sequences.*
