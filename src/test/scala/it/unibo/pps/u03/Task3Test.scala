@@ -4,6 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import u03.Sequences.Sequence.*
 import u03.Streams.*
+import u03.Streams.Stream.fibonacci
 
 class Task3Test:
   @Test def testTakeWhile() =
@@ -18,4 +19,7 @@ class Task3Test:
     assertEquals(expected, res)
 
 
-
+  @Test def testFibonacci() =
+    val res = Stream.toList(Stream.take(fibonacci())(5))
+    val expected = Cons(0, Cons(1, Cons(1, Cons(2, Cons(3, Nil())))))
+    assertEquals(expected, res)

@@ -41,11 +41,14 @@ object Streams extends App :
       case Cons(h, t) if pred(h()) => Stream.cons(h(), takeWhile(t())(pred))
       case _ => Empty()
 
-    def fill[A](n: Int)(a: A): Stream[A] = n match 
+    def fill[A](n: Int)(a: A): Stream[A] = n match
       case n if n > 0 => cons(a, fill(n - 1)(a))
       case _ => Empty()
-    
-      
+
+    def fibonacci(): Stream[Int] =
+      def fib(first: Int, second: Int): Stream[Int] =
+        cons(first, fib(second, first + second))
+      fib(0, 1)
 
 
   end Stream
