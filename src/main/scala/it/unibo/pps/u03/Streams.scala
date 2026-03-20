@@ -60,13 +60,10 @@ object Streams extends App :
       def next(lst: Sequence[A]): Stream[A] = lst match
         case Sequence.Cons(h, t) => cons(h, next(t))
         case Sequence.Nil() => next(s)
-      lst match {
+      lst match
         case Nil() => Empty()
         case _ => next(lst)
-      }
-      
-
-
+    
   end Stream
 
 @main def tryStreams =

@@ -37,9 +37,9 @@ object Sequences: // Essentially, generic linkedlists
      */
     @tailrec
     def skip[A](s: Sequence[A])(n: Int): Sequence[A] = s match
-      case Nil() => Nil()
       case Cons(h, t) if n > 0 => skip(t)(n - 1)
       case Cons(h, t) => Cons(h, t)
+      case _ => Nil()
 
     /*
      * Zip two sequences
@@ -70,8 +70,8 @@ object Sequences: // Essentially, generic linkedlists
       30 =>
      */
     def reverse[A](s: Sequence[A]): Sequence[A] = s match
-      case Nil() => Nil()
       case Cons(h, t) => concat(reverse(t), Cons(h, Nil()))
+      case _ => Nil()
 
     /*
      * Map the elements of the sequence to a new sequence and flatten the result
@@ -81,7 +81,7 @@ object Sequences: // Essentially, generic linkedlists
      */
     def flatMap[A, B](s: Sequence[A])(mapper: A => Sequence[B]): Sequence[B] = s match
       case Cons(h, t) => concat(mapper(h), flatMap(t)(mapper))
-      case Nil() => Nil()
+      case _ => Nil()
 
     /*
      * Get the minimum element in the sequence
@@ -90,7 +90,7 @@ object Sequences: // Essentially, generic linkedlists
      */
     def min(s: Sequence[Int]): Optional[Int] = s match
       case Cons(h, t) => Optional.orElse(Optional.map(min(t))(n => Just(h.min(n))), Just(h))
-      case Nil() => Empty()
+      case _ => Empty()
 
     /*
      * Get the elements at even indices
@@ -99,7 +99,7 @@ object Sequences: // Essentially, generic linkedlists
      */
     def evenIndices[A](s: Sequence[A]): Sequence[A] = s match
       case Cons(h, t) => concat(Cons(h, Nil()), evenIndices(skip(t)(1)))
-      case Nil() => Nil()
+      case _ => Nil()
 
     /*
      * Check if the sequence contains the element
@@ -110,7 +110,7 @@ object Sequences: // Essentially, generic linkedlists
     def contains[A](s: Sequence[A])(elem: A): Boolean = s match
       case Cons(h, t) if h == elem => true
       case Cons(_, t) => contains(t)(elem)
-      case Nil() => false
+      case _ => false
 
     /*
      * Remove duplicates from the sequence
@@ -121,15 +121,10 @@ object Sequences: // Essentially, generic linkedlists
       def skipDuplicates(s1: Sequence[A], seen: Sequence[A]): Sequence[A] = s1 match
         case Cons(h, t) if contains(seen)(h) => skipDuplicates(t, seen)
         case Cons(h, t) => Cons(h, skipDuplicates(t, Cons(h, seen)))
-        case Nil() => Nil()
+        case _ => Nil()
 
       skipDuplicates(s, Nil())
-
-    def distinct1[A](s: Sequence[A]): Sequence[A] = s match
-      case Cons(h, t) if !contains(t)(h) => Cons(h, distinct1(t))
-      case Cons(_, t) => distinct1(t)
-      case Nil() => Nil()
-
+    
     /*
      * Group contiguous elements in the sequence
      * E.g., [10, 10, 20, 30] => [[10, 10], [20], [30]]
@@ -148,7 +143,7 @@ object Sequences: // Essentially, generic linkedlists
 
       s match
         case Cons(h, t) => Cons(streak(s, h), group(dropStreak(t, h)))
-        case Nil() => Nil()
+        case _ => Nil()
 
     /*
      * Partition the sequence into two sequences based on the predicate

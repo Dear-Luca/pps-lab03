@@ -13,7 +13,7 @@ class Task2Test:
   val lst = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
 
   @Test def testEs1() =
-    assertEquals(Cons("Algebra", Cons("Math", Nil())), es1(persons))
+    assertEquals(Cons("Algebra", Cons("Math", Cons("Math", Nil()))), es1(persons))
 
   @Test def testEs2() =
     assertEquals(-16, foldLeft(lst)(0)(_ - _))
