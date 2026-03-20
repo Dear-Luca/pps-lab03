@@ -38,7 +38,7 @@ object Streams extends App :
       cons(init, iterate(next(init))(next))
 
     def takeWhile[A](s: Stream[A])(pred: A => Boolean): Stream[A] = s match
-      case Cons(h, t) if pred(h()) => Stream.cons(h(), takeWhile(t())(pred))
+      case Cons(h, t) if pred(h()) => cons(h(), takeWhile(t())(pred))
       case _ => Empty()
 
     def fill[A](n: Int)(a: A): Stream[A] = n match
@@ -50,6 +50,11 @@ object Streams extends App :
         cons(first, fib(second, first + second))
       fib(0, 1)
 
+    def interleave[A](s1: Stream[A], s2: Stream[A]): Stream[A] = s1 match
+      case Cons(h, t) => cons(h(), interleave(s2, t()))
+      case _ => s2
+
+    def cycle[A](lst: Sequence[A]): Stream[A] = ???
 
   end Stream
 

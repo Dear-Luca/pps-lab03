@@ -23,3 +23,12 @@ class Task3Test:
     val res = Stream.toList(Stream.take(fibonacci())(5))
     val expected = Cons(0, Cons(1, Cons(1, Cons(2, Cons(3, Nil())))))
     assertEquals(expected, res)
+
+  @Test def testInterleave() =
+    val s1 = Stream.take(Stream.iterate(1)(_ + 1))(3)
+    val s2 = Stream.take(Stream.iterate(1)(_ + 1))(2)
+    val res1 = Stream.toList(Stream.interleave(s1, s2))
+    val expected = Cons(1, Cons(1, Cons(2, Cons(2, Cons(3, Nil())))))
+    val res2 = Stream.toList(Stream.interleave(s2, s1))
+    assertEquals(expected, res1)
+    assertEquals(expected, res2)
