@@ -32,3 +32,13 @@ class Task3Test:
     val res2 = Stream.toList(Stream.interleave(s2, s1))
     assertEquals(expected, res1)
     assertEquals(expected, res2)
+
+  @Test def testCycle() =
+    val s1 = Stream.cycle(Cons("a", Cons("b", Cons("c", Nil()))))
+    val res1 = Stream.toList(Stream.take(s1)(7))
+    val expected1 = Cons("a", Cons("b", Cons("c", Cons("a", Cons("b", Cons("c", Cons("a", Nil())))))))
+    val s2 = Stream.cycle(Nil())
+    val res2 = Stream.toList(Stream.take(s2)(3))
+    val expected2 = Nil()
+    assertEquals(expected2, res2)
+    assertEquals(expected1, res1)

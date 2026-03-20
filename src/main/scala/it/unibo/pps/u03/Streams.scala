@@ -3,6 +3,7 @@ package u03
 object Streams extends App :
 
   import Sequences.*
+  import Sequence.*
 
   enum Stream[A]:
     private case Empty()
@@ -54,7 +55,17 @@ object Streams extends App :
       case Cons(h, t) => cons(h(), interleave(s2, t()))
       case _ => s2
 
-    def cycle[A](lst: Sequence[A]): Stream[A] = ???
+    def cycle[A](lst: Sequence[A]): Stream[A] =
+      val s = lst
+      def next(lst: Sequence[A]): Stream[A] = lst match
+        case Sequence.Cons(h, t) => cons(h, next(t))
+        case Sequence.Nil() => next(s)
+      lst match {
+        case Nil() => Empty()
+        case _ => next(lst)
+      }
+      
+
 
   end Stream
 
